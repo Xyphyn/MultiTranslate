@@ -9,8 +9,24 @@ import us.xylight.multitranslate.Provider
  * @param unsupportedProviders
  * Translation providers that do not support the given language.
  */
-enum class Language(code: String, vararg unsupportedProviders: Provider) {
+enum class Language(val code: String, vararg val unsupportedProviders: Provider) {
     ENGLISH("en"),
     SPANISH("es"),
-    HEBREW("ir", Provider.LIBRE_TRANSLATE)
+    HEBREW("he", Provider.DEEPL),
+    JAPANESE("ja"),
+    CHINESE("zh"),
+    FRENCH("fr"),
+    GERMAN("de"),
+    ITALIAN("it"),
+    RUSSIAN("ru");
+
+    companion object {
+        /**
+         * Returns a Language enum from a country code.
+         * @return The Language which country code matches the enum.
+         */
+        fun languageFromCode(code: String): Language? {
+            return Language.values().find { it.code == code }
+        }
+    }
 }
