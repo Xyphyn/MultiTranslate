@@ -7,19 +7,43 @@ import us.xylight.multitranslate.enums.Language
 interface Translator {
     class Builder {
         private var provider: Provider? = null
+        private var key: String? = null
+        private var url: String = "https://api-free.deepl.com/v2/translate"
 
+        /**
+         * The provider to use for translation.
+         */
         fun provider(provider: Provider) = apply { this.provider = provider }
+
+        /**
+         * The key to use for the translation provider. It may be called an API key, or an authentication token.
+         */
+        fun key(key: String) = apply { this.key = key }
+
+        /**
+         * The URL to use for translation. Only for DeepL.
+         */
+        fun url(url: String) = apply { this.url = url }
 
         fun build(): Translator {
             if (provider == null) throw IllegalArgumentException("provider is a required argument.")
 
+            if (key == null && provider!!.keyRequired) throw IllegalArgumentException("The provided provider requires the argument key.")
+
             return when (provider) {
-                Provider.LIBRE_TRANSLATE -> LibreTranslateTranslator()
-                Provider.DEEPL -> DeepLTranslator()
+                Provider.DEEPL -> DeepLTranslator(key!!, url)
                 else -> throw IllegalArgumentException("provider is a required argument.")
             }
         }
     }
 
-    fun translate(text: String, language: Language, from: Language): Translation = Translation("I don't know how you managed to use the regular translator class.")
+    fun validateProviderSupport(language: Language, provider: Provider) {
+        if (language.unsupportedProviders.contains(provider)) {
+            throw IllegalArgumentException("Provider $provider does not support language $language")
+        }
+    }
+
+    suspend fun translate(text: String, language: Language, from: Language?): Translation {
+        return Translation("I don't know how you managed to run translate on this bare interface.", Language.ENGLISH)
+    }
 }
