@@ -26,7 +26,7 @@ enum class Language(val code: String, vararg val unsupportedProviders: Provider)
          * @return The Language which country code matches the enum.
          */
         fun languageFromCode(code: String): Language? {
-            return Language.values().find { it.code == code }
+            return Language.values().find { it.code.lowercase() == code.lowercase() }
         }
     }
 }
