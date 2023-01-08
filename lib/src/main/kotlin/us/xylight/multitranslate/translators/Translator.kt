@@ -10,7 +10,7 @@ interface Translator {
     class Builder {
         private var provider: Provider? = null
         private var key: String? = null
-        private var url: String = "https://api-free.deepl.com/v2/translate"
+        private var url: String? = null
 
         /**
          * The provider to use for translation.
@@ -23,7 +23,7 @@ interface Translator {
         fun key(key: String) = apply { this.key = key }
 
         /**
-         * The URL to use for translation. Only for DeepL.
+         * The URL to use for translation.
          */
         fun url(url: String) = apply { this.url = url }
 
