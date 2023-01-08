@@ -6,4 +6,5 @@ package us.xylight.multitranslate
  */
 enum class Provider(val keyRequired: Boolean) {
     DEEPL(true),
+    LIBRE_TRANSLATE(false)
 }

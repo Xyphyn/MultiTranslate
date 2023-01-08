@@ -34,6 +34,7 @@ interface Translator {
 
             return when (provider) {
                 Provider.DEEPL -> DeepLTranslator(key!!, url)
+                Provider.LIBRE_TRANSLATE -> LibreTranslator(key, url)
                 else -> throw IllegalArgumentException("provider is a required argument.")
             }
         }
