@@ -9,11 +9,14 @@ MultiTranslate currently* supports:
 
 ### Usage
 
-Currently, MultiTranslate is not functional, like most of my projects.
-However, here's what is planned.
+Here is an example on how to use this garbage.
 
-- Easily translate text through a single function.
-- Use languages from multiple providers.
+```kt
+val translator = Translator.Builder().provider(Provider.DEEPL).key("DeepL-Auth-Key abcdabcdabcdabcd").build()
+
+translator.translate("Hello, world!", Language.SPANISH, Language.ENGLISH)
+// > ¡Hola, mundo!
+```
 
 ### FAQ
 
