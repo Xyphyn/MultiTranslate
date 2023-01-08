@@ -7,6 +7,7 @@ data class DeepLTranslationRequest(
     val text: List<String>,
     @SerialName("source_lang") val source: String?,
     @SerialName("target_lang") val target: String,
+    val formality: String
 )
 
 @Serializable

@@ -2,6 +2,8 @@ package us.xylight.multitranslate.translators
 
 import us.xylight.multitranslate.Provider
 import us.xylight.multitranslate.data.Translation
+import us.xylight.multitranslate.enums.Feature
+import us.xylight.multitranslate.enums.Formality
 import us.xylight.multitranslate.enums.Language
 
 interface Translator {
@@ -43,7 +45,13 @@ interface Translator {
         }
     }
 
-    suspend fun translate(text: String, language: Language, from: Language?): Translation {
-        return Translation("I don't know how you managed to run translate on this bare interface.", Language.ENGLISH)
+    fun validateProviderSupport(feature: Feature, provider: Provider) {
+        if (!feature.supportedProviders.contains(provider)) {
+            throw IllegalArgumentException("Provider $provider does not support feature $feature")
+        }
     }
+
+    suspend fun translate(text: String, language: Language, from: Language?, formality: Formality = Formality.NEUTRAL): Translation
+
+    suspend fun detectLanguage(text: String): Language
 }
