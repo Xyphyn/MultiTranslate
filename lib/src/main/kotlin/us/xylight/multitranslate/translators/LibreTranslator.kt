@@ -19,7 +19,7 @@ class LibreTranslator(private val key: String = "", private val url: String) : T
         from: Language?,
         formality: Formality
     ): Translation {
-        validateProviderSupport(language, Provider.DEEPL)
+        validateProviderSupport(language, Provider.LIBRE_TRANSLATE)
 
         val jsonPayload = MultiTranslate.json.encodeToJsonElement(
             LibreTranslationRequest(text, from?.code ?: "auto", language.code, apiKey = key)
@@ -32,8 +32,8 @@ class LibreTranslator(private val key: String = "", private val url: String) : T
             .build()
 
         MultiTranslate.httpClient.newCall(request).execute().use { response ->
-            val resText = response.body?.string() ?: throw TranslationException("Translation response is invalid.")
-            val translation = MultiTranslate.json.decodeFromString<LibreTranslationResponse>(resText)
+            val resText = response.body?.string()!!
+            val translation = kotlin.runCatching { MultiTranslate.json.decodeFromString<LibreTranslationResponse>(resText) }.getOrElse { throw TranslationException("There was an error decoding the response. Did you forget an API key?") }
 
             return Translation(
                 translation.translatedText,
