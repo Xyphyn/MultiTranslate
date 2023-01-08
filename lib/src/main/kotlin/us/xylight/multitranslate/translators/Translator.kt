@@ -33,8 +33,8 @@ interface Translator {
             if (key == null && provider!!.keyRequired) throw IllegalArgumentException("The provided provider requires the argument key.")
 
             return when (provider) {
-                Provider.DEEPL -> DeepLTranslator(key!!, url)
-                Provider.LIBRE_TRANSLATE -> LibreTranslator(key, url)
+                Provider.DEEPL -> DeepLTranslator(key!!, url ?: "https://api-free.deepl.com/v2/translate")
+                Provider.LIBRE_TRANSLATE -> LibreTranslator(key ?: "", url ?: "https://libretranslate.com/translate")
                 else -> throw IllegalArgumentException("provider is a required argument.")
             }
         }

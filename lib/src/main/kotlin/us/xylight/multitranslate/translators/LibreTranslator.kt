@@ -12,7 +12,7 @@ import us.xylight.multitranslate.enums.Feature
 import us.xylight.multitranslate.enums.Formality
 import us.xylight.multitranslate.enums.Language
 
-class LibreTranslator(private val key: String? = "", private val url: String? = "https://libretranslate.com/translate") : Translator {
+class LibreTranslator(private val key: String = "", private val url: String) : Translator {
     override suspend fun translate(
         text: String,
         language: Language,
@@ -22,13 +22,13 @@ class LibreTranslator(private val key: String? = "", private val url: String? = 
         validateProviderSupport(language, Provider.DEEPL)
 
         val jsonPayload = MultiTranslate.json.encodeToJsonElement(
-            LibreTranslationRequest(text, from?.code ?: "auto", language.code, apiKey = key!!)
+            LibreTranslationRequest(text, from?.code ?: "auto", language.code, apiKey = key)
         )
 
         val request = Request.Builder()
             .method("POST", jsonPayload.toString().toRequestBody("application/json".toMediaTypeOrNull()))
             .addHeader("User-Agent", "MultiTranslate/1.0.0")
-            .url(url!!)
+            .url(url)
             .build()
 
         MultiTranslate.httpClient.newCall(request).execute().use { response ->

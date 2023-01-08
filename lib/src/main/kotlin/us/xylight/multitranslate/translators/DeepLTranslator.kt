@@ -17,7 +17,7 @@ import us.xylight.multitranslate.enums.Formality
 import us.xylight.multitranslate.enums.Language
 
 // Please forgive me for what I am about to code.
-class DeepLTranslator(private val key: String, private val url: String? = "https://api-free.deepl.com/v2/translate") : Translator {
+class DeepLTranslator(private val key: String, private val url: String = "https://api-free.deepl.com/v2/translate") : Translator {
     override suspend fun translate(text: String, language: Language, from: Language?, formality: Formality): Translation {
         validateProviderSupport(language, Provider.DEEPL)
 
@@ -29,7 +29,7 @@ class DeepLTranslator(private val key: String, private val url: String? = "https
             .method("POST", jsonPayload.toString().toRequestBody("application/json".toMediaTypeOrNull()))
             .addHeader("Authorization", key)
             .addHeader("User-Agent", "MultiTranslate/1.0.0")
-            .url(url!!)
+            .url(url)
             .build()
 
         MultiTranslate.httpClient.newCall(request).execute().use { response ->
@@ -56,7 +56,7 @@ class DeepLTranslator(private val key: String, private val url: String? = "https
             .method("POST", jsonPayload.toString().toRequestBody("application/json".toMediaTypeOrNull()))
             .addHeader("Authorization", key)
             .addHeader("User-Agent", "MultiTranslate/1.0.0")
-            .url(url!!)
+            .url(url)
             .build()
 
         MultiTranslate.httpClient.newCall(request).execute().use { response ->
