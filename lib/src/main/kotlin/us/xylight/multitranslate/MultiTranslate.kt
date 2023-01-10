@@ -6,5 +6,8 @@ import java.util.concurrent.TimeUnit
 
 object MultiTranslate {
     val httpClient: OkHttpClient = OkHttpClient.Builder().build()
-    val json: Json = Json { encodeDefaults = false }
+    val json: Json = Json {
+        encodeDefaults = false
+        ignoreUnknownKeys = true
+    }
 }

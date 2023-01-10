@@ -13,6 +13,8 @@ import us.xylight.multitranslate.enums.Formality
 import us.xylight.multitranslate.enums.Language
 
 class LibreTranslator(private val key: String = "", private val url: String) : Translator {
+    override val features: List<Feature> = listOf(Feature.DETECT_LANGUAGE)
+
     override suspend fun translate(
         text: String,
         language: Language,
@@ -43,8 +45,21 @@ class LibreTranslator(private val key: String = "", private val url: String) : T
     }
 
     override suspend fun detectLanguage(text: String): Language {
-        validateProviderSupport(Feature.DETECT_LANGUAGE, Provider.LIBRE_TRANSLATE)
+        val jsonPayload = MultiTranslate.json.encodeToJsonElement(
+        LibreTranslationRequest(text, "auto", Language.ENGLISH.code, apiKey = key)
+    )
 
-        return Language.ENGLISH
+        val request = Request.Builder()
+            .method("POST", jsonPayload.toString().toRequestBody("application/json".toMediaTypeOrNull()))
+            .addHeader("User-Agent", "MultiTranslate/1.0.0")
+            .url(url)
+            .build()
+
+        MultiTranslate.httpClient.newCall(request).execute().use { response ->
+            val resText = response.body?.string()!!
+            val translation = kotlin.runCatching { MultiTranslate.json.decodeFromString<LibreTranslationResponse>(resText) }.getOrElse { throw TranslationException("There was an error decoding the response. Did you forget an API key?") }
+
+            return Language.languageFromCode(translation.detectedLanguage!!.language)!!
+        }
     }
 }
