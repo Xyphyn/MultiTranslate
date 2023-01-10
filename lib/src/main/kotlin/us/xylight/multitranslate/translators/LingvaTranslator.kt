@@ -25,18 +25,19 @@ class LingvaTranslator(private val url: String) : Translator {
 
         val request = Request.Builder()
             .addHeader("User-Agent", "MultiTranslate/1.0.0")
-            .url("$url/api/v1/${from?.code ?: "auto"}/${language.code}")
+            .url("$url/api/v1/${from?.code ?: "auto"}/${language.code}/$text")
             .build()
 
         MultiTranslate.httpClient.newCall(request).execute().use { response ->
             val resText = response.body?.string() ?: throw TranslationException("Translation response is invalid.")
+
             val translation = MultiTranslate.json.decodeFromString<LingvaResponse>(resText)
 
             response.body?.close()
 
             return Translation(
                 translation.translation,
-                null
+                translation.info.detectedSource?.let { Language.languageFromCode(it) }
             )
         }
     }
