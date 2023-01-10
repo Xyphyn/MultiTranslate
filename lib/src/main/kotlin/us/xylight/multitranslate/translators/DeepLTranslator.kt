@@ -18,6 +18,8 @@ import us.xylight.multitranslate.enums.Language
 
 // Please forgive me for what I am about to code.
 class DeepLTranslator(private val key: String, private val url: String = "https://api-free.deepl.com/v2/translate") : Translator {
+    override val features: List<Feature> = listOf(Feature.DETECT_LANGUAGE, Feature.FORMALITY, Feature.LANGUAGE_AUTODETCTION)
+
     override suspend fun translate(text: String, language: Language, from: Language?, formality: Formality): Translation {
         validateProviderSupport(language, Provider.DEEPL)
 

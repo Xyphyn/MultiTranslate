@@ -12,7 +12,7 @@ import us.xylight.multitranslate.Provider
 enum class Language(val code: String, vararg val unsupportedProviders: Provider) {
     ENGLISH("en"),
     SPANISH("es"),
-    HEBREW("he", Provider.DEEPL),
+    HEBREW("he", Provider.DEEPL, Provider.LINGVA),
     GREEK("el"),
     SWEDISH("sv"),
     UKRAINIAN("uk"),

@@ -7,6 +7,11 @@ import us.xylight.multitranslate.enums.Formality
 import us.xylight.multitranslate.enums.Language
 
 interface Translator {
+    /**
+     * The supported features for a translator.
+     */
+    val features: List<Feature>
+
     class Builder {
         private var provider: Provider? = null
         private var key: String? = null
@@ -35,6 +40,7 @@ interface Translator {
             return when (provider) {
                 Provider.DEEPL -> DeepLTranslator(key!!, url ?: "https://api-free.deepl.com/v2/translate")
                 Provider.LIBRE_TRANSLATE -> LibreTranslator(key ?: "", url ?: "https://libretranslate.com/translate")
+                Provider.LINGVA -> LingvaTranslator(url ?: "https://lingva.ml")
                 else -> throw IllegalArgumentException("provider is a required argument.")
             }
         }
@@ -47,7 +53,7 @@ interface Translator {
     }
 
     fun validateProviderSupport(feature: Feature, provider: Provider) {
-        if (!feature.supportedProviders.contains(provider)) {
+        if (!features.contains(feature)) {
             throw IllegalArgumentException("Provider $provider does not support feature $feature")
         }
     }
