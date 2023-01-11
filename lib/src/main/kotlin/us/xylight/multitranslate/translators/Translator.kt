@@ -1,6 +1,6 @@
 package us.xylight.multitranslate.translators
 
-import us.xylight.multitranslate.Provider
+import us.xylight.multitranslate.enums.Provider
 import us.xylight.multitranslate.data.Translation
 import us.xylight.multitranslate.enums.Feature
 import us.xylight.multitranslate.enums.Formality

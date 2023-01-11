@@ -1,12 +1,9 @@
 package us.xylight.multitranslate.translators
 
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.encodeToJsonElement
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Request
-import okhttp3.RequestBody.Companion.toRequestBody
 import us.xylight.multitranslate.MultiTranslate
-import us.xylight.multitranslate.Provider
+import us.xylight.multitranslate.enums.Provider
 import us.xylight.multitranslate.data.*
 import us.xylight.multitranslate.enums.Feature
 import us.xylight.multitranslate.enums.Formality

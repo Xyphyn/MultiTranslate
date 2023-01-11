@@ -1,7 +1,6 @@
-package us.xylight.multitranslate
+package us.xylight.multitranslate.enums
 
 /**
- * @constructor Provider
  * An enum to represent translation providers.
  */
 enum class Provider(val keyRequired: Boolean) {

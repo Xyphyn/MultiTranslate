@@ -1,7 +1,5 @@
 package us.xylight.multitranslate.enums
 
-import us.xylight.multitranslate.Provider
-
 /**
  * Used to represent languages.
  * @param code
@@ -13,6 +11,12 @@ enum class Language(val code: String, vararg val unsupportedProviders: Provider)
     ENGLISH("en"),
     SPANISH("es"),
     HEBREW("he", Provider.DEEPL, Provider.LINGVA),
+    ARABIC("ar", Provider.DEEPL),
+    DANISH("da"),
+    INDONESIAN("id"),
+    IRISH("ga", Provider.DEEPL),
+    HUNGARIAN("hu"),
+    KOREAN("ko", Provider.DEEPL),
     GREEK("el"),
     SWEDISH("sv"),
     UKRAINIAN("uk"),
@@ -22,6 +26,8 @@ enum class Language(val code: String, vararg val unsupportedProviders: Provider)
     FRENCH("fr"),
     GERMAN("de"),
     ITALIAN("it"),
+    TURKISH("tr"),
+    CZECH("cs"),
     RUSSIAN("ru");
 
     companion object {
